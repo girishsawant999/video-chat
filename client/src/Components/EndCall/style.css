@@ -15,9 +15,23 @@ button.leave-call {
   color: white;
   transition: 200ms ease-in-out;
   z-index: 3;
+  opacity: 1;
+  animation: opacity-delay 500ms linear 4s forwards;
 }
+@keyframes opacity-delay {
+  to {
+    opacity: 0.2;
+  }
+}
+
 button.leave-call:hover {
   background: #ff000070;
+  opacity: 1;
   transform: scale(0.98);
   transform: translateX(-50%);
+  animation: none;
+}
+
+button.leave-call svg {
+  transform: rotate(180deg);
 }

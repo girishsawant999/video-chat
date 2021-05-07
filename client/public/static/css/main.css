@@ -8,6 +8,7 @@
   --secondary-color: #e91e63;
   --bg-primary: #eaeaea;
   --bg-dark: #161623;
+  --bg-grey: #4e4e4e;
 }
 * {
   margin: 0;
@@ -123,6 +124,9 @@ button.primary:hover {
   background: var(--primary-color-highligted);
   transform: scale(0.98);
 }
+button:disabled.primary:hover {
+  transform: scale(1);
+}
 .react-responsive-modal-modal {
   box-shadow: 20px 20px 50px rgb(0 0 0 / 50%) !important;
   background: rgba(255, 255, 255, 0.2) !important;
@@ -131,6 +135,11 @@ button.primary:hover {
   backdrop-filter: blur(10px);
   border-radius: 10px;
   max-width: 500px !important;
+  padding: 1.5rem !important;
+}
+.react-responsive-modal-closeButton {
+  top: 5px !important;
+  right: 5px !important;
 }
 .react-responsive-modal-closeButton svg {
   fill: #fff;
@@ -148,4 +157,15 @@ input {
 }
 input::placeholder {
   color: rgba(255, 255, 255, 0.685);
+}
+.Toastify__toast {
+  box-shadow: 20px 20px 50px rgb(0 0 0 / 50%) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 10px !important;
+  color: #fff !important;
+  font-family: "primary" !important;
+  font-size: 1.4rem;
 }

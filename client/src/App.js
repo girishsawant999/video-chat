@@ -1,7 +1,11 @@
+import CallHelper from "Components/CallHelper";
+import CallHelperModal from "Components/CallHelperModal";
 import EndCall from "Components/EndCall";
-import ModalCustom from "Components/Modal";
 import SelfVideo from "Components/SelfVideo";
+import useAudio from "Components/useAudio";
 import React, { useContext, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { SocketContext } from "./Components/SocketContext";
 import UserVideo from "./Components/UserVideo";
 
@@ -12,14 +16,19 @@ function App() {
     call,
     callAccepted,
     callEnded,
+    callRejected,
     myVideo,
     userVideo,
     answercall,
+    rejectCall,
     callUser,
     leaveCall,
   } = useContext(SocketContext);
 
+  const { audio, playAudio, stopAudio } = useAudio();
+
   const [showMakeCallModal, setshowMakeCallModal] = useState(false);
+  const [clientId, setclientId] = useState("");
 
   const getIdFromUrl = () => {
     try {
@@ -33,73 +42,70 @@ function App() {
   const Initiate = () => {
     const Id = getIdFromUrl();
     if (Id) {
+      setclientId(Id);
       setshowMakeCallModal(true);
     }
   };
 
   useEffect(Initiate, []);
 
-  const onMakeCall = (e) => {
-    e.preventDefault();
-    const clientId = e.target.clientId.value;
-    const Name = e.target.name.value;
-    callUser(clientId, Name);
-    setshowMakeCallModal(false);
+  const onAnswerCall = () => {
+    stopAudio(audio);
+    answercall();
   };
 
   return (
-    <div className="h-screen w-screen overflow-hidden position-relative">
-      <UserVideo
-        callAccepted={callAccepted}
-        callEnded={callEnded}
-        callUser={callUser}
-        answercall={answercall}
-        userVideo={userVideo}
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={4000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <div className="h-screen w-screen overflow-hidden position-relative">
+        {callAccepted && !callEnded ? (
+          <UserVideo userVideo={userVideo} />
+        ) : (
+          <CallHelper
+            callAccepted={callAccepted}
+            answercall={onAnswerCall}
+            rejectCall={rejectCall}
+            callRejected={callRejected}
+            call={call}
+            setshowMakeCallModal={setshowMakeCallModal}
+            audio={audio}
+            playAudio={playAudio}
+            stopAudio={stopAudio}
+          />
+        )}
+        <SelfVideo
+          stream={stream}
+          myVideo={myVideo}
+          callAccepted={callAccepted}
+          callEnded={callEnded}
+          leaveCall={leaveCall}
+        />
+        <EndCall
+          callAccepted={callAccepted}
+          callEnded={callEnded}
+          leaveCall={leaveCall}
+        />
+      </div>
+      <CallHelperModal
+        open={showMakeCallModal}
+        setOpen={setshowMakeCallModal}
         userId={myId}
-        call={call}
-      />
-      <SelfVideo
-        stream={stream}
-        myVideo={myVideo}
+        callUser={callUser}
+        clientId={clientId}
+        callRejected={callRejected}
         callAccepted={callAccepted}
-        callEnded={callEnded}
-        leaveCall={leaveCall}
       />
-      <EndCall
-        callAccepted={callAccepted}
-        callEnded={callEnded}
-        leaveCall={leaveCall}
-      />
-      <ModalCustom open={showMakeCallModal} setOpen={setshowMakeCallModal}>
-        <div className="join-link">
-          <form
-            onSubmit={onMakeCall}
-            method="post"
-            className="d-flex justify-content-center align-items-center flex-column"
-          >
-            <label htmlFor="Enter Id"></label>
-            <input
-              id="Enter Id"
-              type="text"
-              placeholder="Enter id"
-              name="clientId"
-              value={getIdFromUrl()}
-              readOnly
-              required
-            />
-            <input
-              type="text"
-              placeholder="Enter your name"
-              name="name"
-              required
-            />
-            <button type="submit" className="primary mt-2">
-              <i className="fas fa-plus"></i>Make a call
-            </button>
-          </form>
-        </div>
-      </ModalCustom>
-    </div>
+    </>
   );
 }
 

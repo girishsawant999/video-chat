@@ -11,6 +11,7 @@ const ContextProvider = ({ children }) => {
   const [call, setcall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
+  const [callRejected, setCallRejected] = useState(false);
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -59,7 +60,22 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
 
+  const rejectCall = () => {
+    console.log(`rejectCall`);
+    const peer = new Peer({ initiator: false, trickle: false, stream });
+
+    peer.on("signal", (data) => {
+      setcall({});
+      socket.emit("rejectcall", { signal: data, to: call.from });
+    });
+
+    peer.signal(call.signal);
+    connectionRef.current = peer;
+  };
+
   const callUser = (id, name) => {
+    setCallRejected(false);
+    setCallEnded(false);
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -71,13 +87,16 @@ const ContextProvider = ({ children }) => {
       });
     });
 
-    peer.on("stream", (currentStream) => {
-      userVideo.current.srcObject = currentStream;
-    });
-
     socket.on("callaccepted", (signal) => {
       setCallAccepted(true);
+      peer.on("stream", (currentStream) => {
+        userVideo.current.srcObject = currentStream;
+      });
       peer.signal(signal);
+    });
+
+    socket.on("callrejected", (signal) => {
+      setCallRejected(true);
     });
 
     connectionRef.current = peer;
@@ -86,7 +105,7 @@ const ContextProvider = ({ children }) => {
   const leaveCall = () => {
     setCallEnded(true);
     connectionRef.current.destroy();
-    window.location.reload();
+    window.location.href = window.location.origin;
   };
 
   return (
@@ -97,9 +116,11 @@ const ContextProvider = ({ children }) => {
         call,
         callAccepted,
         callEnded,
+        callRejected,
         myVideo,
         userVideo,
         answercall,
+        rejectCall,
         callUser,
         leaveCall,
       }}

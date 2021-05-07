@@ -1,11 +1,14 @@
 .self-video-div {
-  bottom: 5px;
-  left: 5px;
+  bottom: 10px;
+  left: 10px;
   z-index: 1;
   width: 250px;
   height: 250px;
   transition: width 200ms ease-in-out, height 100ms ease-in-out 100ms;
   border-radius: 5px;
+}
+.video-div {
+  background-color: var(--bg-grey);
 }
 .self-video {
   width: 100%;
@@ -22,7 +25,8 @@
   top: 0px;
   right: 0px;
   padding: 6px;
-  background: linear-gradient(#2196f3, #e91e63);
+  background: rgba(255, 255, 255, 0.2);
+  color: black;
   border-radius: 0px 5px 0px 5px;
   display: flex;
   justify-content: center;
@@ -35,7 +39,6 @@
 .self-video-div.hide .minimize-button {
   display: none;
   z-index: 0;
-
 }
 .self-video-div.hide .expand-button {
   display: flex;
@@ -55,4 +58,10 @@
   width: 35px;
   height: 35px;
   z-index: 0;
+}
+@media only screen and (max-width: 768px) {
+  .self-video-div {
+    width: 120px;
+    height: 120px;
+  }
 }

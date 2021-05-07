@@ -32,15 +32,17 @@ const SelfVideo = ({ stream, myVideo, callAccepted, callEnded, leaveCall }) => {
           >
             <i className="fas fa-expand-arrows-alt"></i>
           </span>
-          {stream && (
-            <Video
-              componentRef={myVideo}
-              muted
-              autoPlay
-              playsInline
-              className="self-video"
-            />
-          )}
+          <div className="h-100 w-100 video-div">
+            {stream && (
+              <Video
+                componentRef={myVideo}
+                muted
+                autoPlay
+                playsInline
+                className="self-video"
+              />
+            )}
+          </div>
           <div></div>
         </div>
       </div>

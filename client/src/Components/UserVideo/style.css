@@ -1,10 +1,6 @@
 .call-status {
   margin-bottom: 1rem;
 }
-.join-create-modal {
-  max-width: 500px;
-  width: 100%;
-}
 .user-video {
   height: 100%;
   width: 100%;
@@ -12,5 +8,15 @@
   z-index: 1;
 }
 
+button.reject-call > svg {
+  transform: rotate(180deg);
+}
+button.reject-call {
+  background: red;
+  border: 2px solid red;
+}
+button.reject-call:hover {
+  background: rgba(255, 0, 0, 0.418);
+}
 @media only screen and (max-width: 768px) {
 }
