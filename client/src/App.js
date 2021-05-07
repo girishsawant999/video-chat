@@ -49,6 +49,12 @@ function App() {
 
   useEffect(Initiate, []);
 
+  useEffect(() => {
+    if (!showMakeCallModal && clientId) {
+      setclientId("");
+    }
+  }, [showMakeCallModal, clientId]);
+
   const onAnswerCall = () => {
     stopAudio(audio);
     answercall();
@@ -72,10 +78,8 @@ function App() {
           <UserVideo userVideo={userVideo} />
         ) : (
           <CallHelper
-            callAccepted={callAccepted}
             answercall={onAnswerCall}
             rejectCall={rejectCall}
-            callRejected={callRejected}
             call={call}
             setshowMakeCallModal={setshowMakeCallModal}
             audio={audio}

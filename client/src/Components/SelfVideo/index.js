@@ -3,16 +3,10 @@ import React from "react";
 import "./style.css";
 
 const SelfVideo = ({ stream, myVideo, callAccepted, callEnded, leaveCall }) => {
-  const minimizeVideo = () => {
+  const toggleMinimize = () => {
     const ele = document.querySelector(".self-video-div");
     if (ele) {
-      ele.classList.add("hide");
-    }
-  };
-  const expandVideo = () => {
-    const ele = document.querySelector(".self-video-div");
-    if (ele) {
-      ele.classList.remove("hide");
+      ele.classList.toggle("hide");
     }
   };
 
@@ -22,16 +16,11 @@ const SelfVideo = ({ stream, myVideo, callAccepted, callEnded, leaveCall }) => {
         <div className="h-100 w-100 position-relative">
           <span
             className="position-absolute minimize-button"
-            onClick={minimizeVideo}
+            onClick={toggleMinimize}
           >
-            <i className="fas fa-compress-arrows-alt"></i>
+            <i className="fas fa-expand-alt"></i>
           </span>
-          <span
-            className="position-absolute expand-button"
-            onClick={expandVideo}
-          >
-            <i className="fas fa-expand-arrows-alt"></i>
-          </span>
+
           <div className="h-100 w-100 video-div">
             {stream && (
               <Video

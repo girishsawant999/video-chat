@@ -46,6 +46,10 @@ const ContextProvider = ({ children }) => {
 
   const answercall = () => {
     setCallAccepted(true);
+    setcall({
+      ...call,
+      isReceivedCall: false,
+    });
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
