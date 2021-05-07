@@ -130,7 +130,6 @@ button.primary:hover {
   border-left: 1px solid rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   border-radius: 10px;
-  min-width: 340px;
   max-width: 500px !important;
 }
 .react-responsive-modal-closeButton svg {
