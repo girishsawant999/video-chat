@@ -1,0 +1,16 @@
+.call-status {
+  margin-bottom: 1rem;
+}
+.join-create-modal {
+  max-width: 500px;
+  width: 100%;
+}
+.user-video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+@media only screen and (max-width: 768px) {
+}

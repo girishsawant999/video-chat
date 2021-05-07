@@ -11,13 +11,12 @@ const ContextProvider = ({ children }) => {
   const [call, setcall] = useState({});
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
-  const [name, setname] = useState("");
 
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
 
-  useEffect(() => {
+  const initiate = () => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       alert("Browser not supported");
       return;
@@ -40,7 +39,9 @@ const ContextProvider = ({ children }) => {
         signal,
       });
     });
-  }, []);
+  };
+
+  useEffect(initiate, []);
 
   const answercall = () => {
     setCallAccepted(true);
@@ -58,7 +59,7 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
 
-  const callUser = (id) => {
+  const callUser = (id, name) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -96,10 +97,8 @@ const ContextProvider = ({ children }) => {
         call,
         callAccepted,
         callEnded,
-        name,
         myVideo,
         userVideo,
-        setname,
         answercall,
         callUser,
         leaveCall,

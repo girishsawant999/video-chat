@@ -1,0 +1,152 @@
+@font-face {
+  font-family: "primary";
+  src: url("../fonts/Itim-Regular.ttf");
+}
+:root {
+  --primary-color: #2196f3;
+  --primary-color-highligted: #2196f3b3;
+  --secondary-color: #e91e63;
+  --bg-primary: #eaeaea;
+  --bg-dark: #161623;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "primary", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg-dark);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  color: #fff;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#f00, #f0f);
+  clip-path: circle(30% at right 70%);
+}
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#2196f3, #e91e63);
+  clip-path: circle(20% at 10% 10%);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+.h-screen {
+  height: 100vh !important;
+}
+.w-screen {
+  width: 100vw !important;
+}
+.font-weight-extra-light {
+  font-weight: 200 !important;
+}
+.font-weight-semi-light {
+  font-weight: 300 !important;
+}
+.font-weight-light {
+  font-weight: 400 !important;
+}
+.font-weight-normal {
+  font-weight: 500 !important;
+}
+.font-weight-bold {
+  font-weight: 600 !important;
+}
+.font-weight-semi-bold {
+  font-weight: 700 !important;
+}
+.font-weight-extra-bold {
+  font-weight: 900 !important;
+}
+.text-1 {
+  font-size: 0.25rem;
+}
+.text-2 {
+  font-size: 0.5rem;
+}
+.text-3 {
+  font-size: 0.75rem;
+}
+.text-4 {
+  font-size: 1rem;
+}
+.text-5 {
+  font-size: 1.25rem;
+}
+.text-6 {
+  font-size: 1.5rem;
+}
+.text-7 {
+  font-size: 1.75rem;
+}
+.text-8 {
+  font-size: 2rem;
+}
+button > svg {
+  margin: 0px 4px;
+}
+button.primary {
+  font-size: 1rem;
+  padding: 2px 10px;
+  outline: none;
+  color: #fff;
+  background: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  transition: 0.2s ease-in-out;
+  min-width: 130px;
+  border-radius: 2px;
+  text-transform: capitalize;
+}
+button.primary:hover {
+  background: var(--primary-color-highligted);
+  transform: scale(0.98);
+}
+.react-responsive-modal-modal {
+  box-shadow: 20px 20px 50px rgb(0 0 0 / 50%) !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  min-width: 340px;
+  max-width: 500px !important;
+}
+.react-responsive-modal-closeButton svg {
+  fill: #fff;
+}
+input {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  padding: 4px 10px;
+  outline: none;
+  margin: 5px 0;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.685);
+}

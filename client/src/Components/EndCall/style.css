@@ -1,0 +1,23 @@
+button.leave-call {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  outline: none;
+  border: 2px solid red;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  color: white;
+  transition: 200ms ease-in-out;
+  z-index: 3;
+}
+button.leave-call:hover {
+  background: #ff000070;
+  transform: scale(0.98);
+  transform: translateX(-50%);
+}
