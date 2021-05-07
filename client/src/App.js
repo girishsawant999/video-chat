@@ -40,6 +40,7 @@ function App() {
   };
 
   const Initiate = () => {
+    window.scrollTo(0, window.innerHeight / 2);
     const Id = getIdFromUrl();
     if (Id) {
       setclientId(Id);
