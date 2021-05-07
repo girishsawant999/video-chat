@@ -20,6 +20,7 @@
   height: 100%;
   border-radius: 5px;
   object-fit: cover;
+  transform: scaleX(-1);
 }
 
 .self-video-div .minimize-button {
@@ -44,6 +45,43 @@
   border-radius: 5px;
 }
 
+.self-video-div .video-functions-buttons {
+  display: flex;
+  width: 90px;
+  justify-content: space-between;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+.self-video-div.hide .video-functions-buttons {
+  display: none;
+  width: 0px;
+  height: 0px;
+}
+.self-video-div .video-functions-buttons span.mute-button,
+span.camera-button {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  transition: 200ms ease-in-out;
+}
+.self-video-div .video-functions-buttons span.mute-button:hover,
+span.camera-button:hover {
+  transform: scale(0.98);
+}
+.self-video-div .video-functions-buttons span.mute-button.enabled,
+span.camera-button.enabled {
+  background: #fff;
+  color: var(--bg-dark);
+}
+
 @media only screen and (max-width: 768px) {
   .self-video-div {
     width: 120px;
@@ -52,5 +90,13 @@
     bottom: auto;
     top: 0px;
     right: 0px;
+  }
+  .self-video-div .video-functions-buttons {
+    top: auto;
+    flex-direction: column;
+    bottom: 0px;
+    width: auto;
+    height: 90px;
+    transform: translate(10px, 100px);
   }
 }

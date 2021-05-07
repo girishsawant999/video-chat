@@ -55,7 +55,10 @@ const CallHelperModal = ({
               <div className="create-link d-flex justify-content-center align-items-center flex-column">
                 <h4>Share joining link</h4>
                 <CopyToClipboard
-                  text={`${process.env.REACT_APP_FRONTEND_URL}?id=${userId}`}
+                  text={`${
+                    process.env.REACT_APP_FRONTEND_URL ||
+                    "http://localhost:3000"
+                  }?id=${userId}`}
                 >
                   <button className="primary" onClick={onCopyLink}>
                     <i className="fa fa-clipboard" aria-hidden="true"></i>

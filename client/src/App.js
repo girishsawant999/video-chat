@@ -23,6 +23,8 @@ function App() {
     rejectCall,
     callUser,
     leaveCall,
+    setlocalStreamConstraints,
+    localStreamConstraints,
   } = useContext(SocketContext);
 
   const { audio, playAudio, stopAudio } = useAudio();
@@ -93,6 +95,8 @@ function App() {
           callAccepted={callAccepted}
           callEnded={callEnded}
           leaveCall={leaveCall}
+          setlocalStreamConstraints={setlocalStreamConstraints}
+          localStreamConstraints={localStreamConstraints}
         />
         <EndCall
           callAccepted={callAccepted}

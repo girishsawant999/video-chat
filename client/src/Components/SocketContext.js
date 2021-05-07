@@ -3,7 +3,9 @@ import Peer from "simple-peer";
 import { io } from "socket.io-client";
 const SocketContext = createContext();
 
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+const socket = io(
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000/"
+);
 
 const ContextProvider = ({ children }) => {
   const [stream, setstream] = useState(null);
@@ -12,10 +14,42 @@ const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
   const [callRejected, setCallRejected] = useState(false);
+  const [localStreamConstraints, setlocalStreamConstraints] = useState({
+    audio: false,
+    video: false,
+  });
 
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+
+  useEffect(() => {
+    if (!stream || !myVideo) return;
+    stream.getAudioTracks().forEach((track) => (track.enabled = false));
+    stream.getVideoTracks().forEach((track) => (track.enabled = false));
+    if (localStreamConstraints.audio) {
+      stream.getAudioTracks().forEach((track) => (track.enabled = true));
+    }
+    if (localStreamConstraints.video) {
+      stream.getVideoTracks().forEach((track) => (track.enabled = true));
+    }
+    myVideo.current.srcObject = stream;
+    return () => {};
+  }, [localStreamConstraints, stream]);
+
+  useEffect(() => {
+    if (localStreamConstraints.video) {
+      setLocalVideoStream(localStreamConstraints.video);
+    }
+  }, [localStreamConstraints.video]);
+
+  const setLocalVideoStream = (video = false) => {
+    navigator.mediaDevices
+      .getUserMedia({ video: video, audio: true })
+      .then((currentStream) => {
+        setstream(currentStream);
+      });
+  };
 
   const initiate = () => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -23,13 +57,7 @@ const ContextProvider = ({ children }) => {
       return;
     }
 
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setstream(currentStream);
-        myVideo.current.srcObject = currentStream;
-      });
-
+    setLocalVideoStream();
     socket.on("me", (id) => setmyId(id));
 
     socket.on("calluser", ({ from, name: callerName, signal }) => {
@@ -127,6 +155,8 @@ const ContextProvider = ({ children }) => {
         rejectCall,
         callUser,
         leaveCall,
+        localStreamConstraints,
+        setlocalStreamConstraints,
       }}
     >
       {children}
