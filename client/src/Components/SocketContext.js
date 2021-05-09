@@ -71,7 +71,7 @@ const ContextProvider = ({ children }) => {
     });
   };
 
-  useEffect(initiate, []);
+  useEffect(initiate, [playAudio]);
 
   const answercall = () => {
     setCallAccepted(true);
