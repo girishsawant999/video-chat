@@ -2,7 +2,6 @@ import CallHelper from "Components/CallHelper";
 import CallHelperModal from "Components/CallHelperModal";
 import EndCall from "Components/EndCall";
 import SelfVideo from "Components/SelfVideo";
-import useAudio from "Components/useAudio";
 import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,8 +25,6 @@ function App() {
     setlocalStreamConstraints,
     localStreamConstraints,
   } = useContext(SocketContext);
-
-  const { audio, playAudio, stopAudio } = useAudio();
 
   const [showMakeCallModal, setshowMakeCallModal] = useState(false);
   const [clientId, setclientId] = useState("");
@@ -57,11 +54,6 @@ function App() {
     }
   }, [showMakeCallModal, clientId]);
 
-  const onAnswerCall = () => {
-    stopAudio(audio);
-    answercall();
-  };
-
   return (
     <>
       <ToastContainer
@@ -80,13 +72,10 @@ function App() {
           <UserVideo userVideo={userVideo} />
         ) : (
           <CallHelper
-            answercall={onAnswerCall}
+            answercall={answercall}
             rejectCall={rejectCall}
             call={call}
             setshowMakeCallModal={setshowMakeCallModal}
-            audio={audio}
-            playAudio={playAudio}
-            stopAudio={stopAudio}
           />
         )}
         <SelfVideo

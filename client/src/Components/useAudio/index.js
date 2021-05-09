@@ -1,17 +1,16 @@
 import Violin from "Assets/tones/Violin.mp3";
+import { useRef } from "react";
 
 const useAudio = () => {
-  const audio = new Audio(Violin);
-
-  const playAudio = (_tone) => {
-    _tone.play();
+  const audio = useRef(new Audio(Violin));
+  const playAudio = () => {
+    audio.current.play();
   };
-  const stopAudio = (_tone) => {
-    _tone.pause();
-    _tone.currentTime = 0;
+  const stopAudio = () => {
+    audio.current.pause();
+    audio.current.currentTime = 0;
   };
   return {
-    audio,
     playAudio,
     stopAudio,
   };

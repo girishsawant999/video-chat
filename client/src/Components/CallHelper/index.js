@@ -1,27 +1,6 @@
-import React, { useEffect } from "react";
-import { toast } from "react-toastify";
+import React from "react";
 
-const CallHelper = ({
-  answercall,
-  rejectCall,
-  call,
-  setshowMakeCallModal,
-  audio,
-  stopAudio,
-  playAudio,
-}) => {
-  const onRejectCall = (e) => {
-    stopAudio(audio);
-    rejectCall();
-  };
-
-  useEffect(() => {
-    if (call.isReceivedCall) {
-      toast(`📞 Incoming call`);
-      playAudio(audio);
-    }
-  }, [call.isReceivedCall, audio, playAudio]);
-
+const CallHelper = ({ answercall, rejectCall, call, setshowMakeCallModal }) => {
   return (
     <>
       <div className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
@@ -45,10 +24,7 @@ const CallHelper = ({
               <button className="primary mx-2" onClick={answercall}>
                 <i className="fas fa-phone-volume"></i>Answer
               </button>
-              <button
-                className="primary mx-2 reject-call"
-                onClick={onRejectCall}
-              >
+              <button className="primary mx-2 reject-call" onClick={rejectCall}>
                 <i className="fas fa-phone-slash"></i>
                 Reject
               </button>

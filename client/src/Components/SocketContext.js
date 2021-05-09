@@ -1,6 +1,9 @@
+import useAudio from "Components/useAudio";
 import { createContext, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import Peer from "simple-peer";
 import { io } from "socket.io-client";
+
 const SocketContext = createContext();
 
 const socket = io(
@@ -8,6 +11,8 @@ const socket = io(
 );
 
 const ContextProvider = ({ children }) => {
+  const { playAudio, stopAudio } = useAudio();
+
   const [stream, setstream] = useState(null);
   const [myId, setmyId] = useState("");
   const [call, setcall] = useState({});
@@ -61,6 +66,8 @@ const ContextProvider = ({ children }) => {
         name: callerName,
         signal,
       });
+      toast(`📞 Incoming call`);
+      playAudio();
     });
   };
 
@@ -68,10 +75,7 @@ const ContextProvider = ({ children }) => {
 
   const answercall = () => {
     setCallAccepted(true);
-    setcall({
-      ...call,
-      isReceivedCall: false,
-    });
+    stopAudio();
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -88,6 +92,7 @@ const ContextProvider = ({ children }) => {
 
   const rejectCall = () => {
     console.log(`rejectCall`);
+    stopAudio();
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
