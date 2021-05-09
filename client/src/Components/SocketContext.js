@@ -37,15 +37,9 @@ const ContextProvider = ({ children }) => {
     return () => {};
   }, [localStreamConstraints, stream]);
 
-  useEffect(() => {
-    if (localStreamConstraints.video) {
-      setLocalVideoStream(localStreamConstraints.video);
-    }
-  }, [localStreamConstraints.video]);
-
-  const setLocalVideoStream = (video = false) => {
+  const setLocalVideoStream = () => {
     navigator.mediaDevices
-      .getUserMedia({ video: video, audio: true })
+      .getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
         setstream(currentStream);
       });
