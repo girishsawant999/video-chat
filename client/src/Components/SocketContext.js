@@ -43,11 +43,16 @@ const ContextProvider = ({ children }) => {
   }, [localStreamConstraints, stream]);
 
   const setLocalVideoStream = () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setstream(currentStream);
-      });
+    const constraints = {
+      video: true,
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+      },
+    };
+    navigator.mediaDevices.getUserMedia(constraints).then((currentStream) => {
+      setstream(currentStream);
+    });
   };
 
   const initiate = () => {
